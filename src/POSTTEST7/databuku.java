@@ -3,45 +3,45 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package POSTTEST6;
+package POSTTEST7;
 
-import java.sql.*;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import POSTTEST7.koneksi;
+import java.sql.*;    //untuk mengimpor java.sql untuk dapar berinteraksi dengan databases server
+import javax.swing.JOptionPane; // untuk mengimpor JOptuonePane
+import javax.swing.table.DefaultTableModel; // untuk mengimpor table model 
+import POSTTEST7.koneksi; // untuk mengimpor koneksi database
 import javax.swing.JOptionPane;
 
-public class databuku extends javax.swing.JFrame {
-    private DefaultTableModel model;
-    private Connection con = koneksi.getConnection();
-    private Statement stt;
-    private ResultSet rss;
+public class databuku extends javax.swing.JFrame { //merupakan class databuku tururnan dari javax.swing.Frame
+    private DefaultTableModel model; //model merupakan nama variable dari defaulttablemodel
+    private Connection con = koneksi.getConnection(); //untuk mengkoneksikan dengan variable co
+    private Statement stt; //untuk mengeksekusi dengan variable stt
+    private ResultSet rss; // untuk menampung queri dengan variable rss
     private boolean acc=true;
 
     /**
      * Creates new form databuku
      */
-    public databuku() {
+    public databuku() { //metod data buku
         initComponents();
     }
-        private void InitTable(){
-            model = new DefaultTableModel();
-            model.addColumn("ID");
-            model.addColumn("JUDUL");
-            model.addColumn("PENULIS");
-            model.addColumn("HARGA");
+        private void InitTable(){ //metod untuk table
+            model = new DefaultTableModel();  //membuat table baru dimodel
+            model.addColumn("ID");   //kolo id ddalam model
+            model.addColumn("JUDUL");  //kolom judul dalam model
+            model.addColumn("PENULIS");  //kolom penulis dalam model
+            model.addColumn("HARGA");  //kolom harga dalam model
             
-            jTable1.setModel(model);
+            jTable1.setModel(model); //table berisi data dari model
         }
     
-    private void TampilData(){
+    private void TampilData(){ //metod tampil data
         try {
-            String sql = "SELECT *FROM buku";
+            String sql = "SELECT *FROM buku"; // query untuk memanggil tampilan buku
             stt = con.createStatement();
             rss = stt.executeQuery(sql);
-            while (rss.next()){
-                Object[] o =new Object[4];
-                o [0] = rss.getInt("id_buku");
+            while (rss.next()){ 
+                Object[] o =new Object[4]; // untuk membuat objek
+                o [0] = rss.getString("id_buku");
                 o [1] = rss.getString("judul");
                 o [2] = rss.getString("penulis");
                 o [3] = rss.getInt("harga");
@@ -52,11 +52,11 @@ public class databuku extends javax.swing.JFrame {
         }
     }        
      
-    private void TambahData(String judul, String penulis, String harga){
+    private void TambahData(String judul, String penulis, String harga){ //metod untk tambahdata
         try {
             String sql =
                      "INSERT INTO buku VALUES (NULL,'"+
-                    judul+"','"+penulis+"',"+harga+")";
+                    judul+"','"+penulis+"',"+harga+")"; //query untuk menambahkan data berdasarkan judul,penulis,harga
             stt = con.createStatement();
             stt.executeUpdate(sql);
             model.addRow(new Object[]{judul,penulis,harga});
@@ -77,7 +77,7 @@ public class databuku extends javax.swing.JFrame {
         }
     private void HapusData(String id, int baris){ //metod untuk menghapus data
         try{
-            String sqldelete = "DELETE from buku where id_buku='"+id+"'";
+            String sqldelete = "DELETE from buku where id_buku='"+id+"'"; //query untuk menghapusdata buku 
             stt = con.createStatement();
             stt.executeUpdate(sqldelete);
             model.removeRow(baris);
@@ -89,11 +89,11 @@ public class databuku extends javax.swing.JFrame {
 
     private void CariPenulis(){ //metod pencarian untuk mencari data berdasarkan penulis
         try{
-            String sql = "Select*from buku where penulis='"+jTextField3.getText()+"'";
+            String sql = "Select*from buku where penulis='"+jTextField3.getText()+"'"; //query untuk pencarian buku
             stt = con.createStatement();
             rss = stt.executeQuery(sql);
             while(rss.next()){
-                Object[] o= new Object[4];
+                Object[] o= new Object[4]; // untuk membuat objek
                 o[0] = rss.getInt("id_buku");
                 o[1] = rss.getString("judul");
                 o[2] = rss.getString("penulis");
@@ -107,11 +107,11 @@ public class databuku extends javax.swing.JFrame {
      
     private void CariHarga(){ //metod pencarian untuk mencari data berdasarkan harga
         try{
-            String sql= "select*from buku where harga='"+jTextField3.getText()+"'";
+            String sql= "select*from buku where harga='"+jTextField3.getText()+"'"; //query untuk pencarian harga buku
             stt = con.createStatement();
             rss = stt.executeQuery(sql);
             while(rss.next()){
-                Object[] o=new Object[4];
+                Object[] o=new Object[4]; // untuk membuat objek
                 o[0] = rss.getInt("id_buku");
                 o[1] = rss.getString("judul");
                 o[2] = rss.getString("penulis");
@@ -125,11 +125,11 @@ public class databuku extends javax.swing.JFrame {
     
      private void CariId(){ //metod pencarian untuk mencari data berdasarkan id
         try{
-            String sql= "select * from buku where id_buku='"+jTextField3.getText()+"'";
+            String sql= "select * from buku where id_buku='"+jTextField3.getText()+"'"; //query untuk pencarian berdasarkan id buku
             stt = con.createStatement();
             rss = stt.executeQuery(sql);
             while(rss.next()){
-                Object[] o=new Object[4];
+                Object[] o=new Object[4]; // untuk membuat objek
                 o[0] = rss.getInt("id_buku");
                 o[1] = rss.getString("judul");
                 o[2] = rss.getString("penulis");
@@ -143,11 +143,11 @@ public class databuku extends javax.swing.JFrame {
      
       private void CariJudul(){ //metod pencarian untuk mencari data berdasarkan judul
         try{
-            String sql= "select*from buku where judul='"+jTextField3.getText()+"'";
-            stt = con.createStatement();
+            String sql= "select*from buku where judul='"+jTextField3.getText()+"'"; //query untuk pencarian judul buku
+            stt = con.createStatement(); 
             rss = stt.executeQuery(sql);
             while(rss.next()){
-                Object[] o=new Object[4];
+                Object[] o=new Object[4]; // untuk membuat objek
                 o[0] = rss.getInt("id_buku");
                 o[1] = rss.getString("judul");
                 o[2] = rss.getString("penulis");
@@ -434,24 +434,50 @@ public class databuku extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pack();
+        setSize(new java.awt.Dimension(472, 399));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         // TODO add your handling code here:
         InitTable();
-        TampilData();
+        TampilData(); //untuk memanggil metod tampil data
     }//GEN-LAST:event_formComponentShown
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-      
-        String judul = jTextField1.getText();
-        String penulis = jComboBox1.getSelectedItem().toString();
-        String harga = jTextField2.getText();
-        TambahData(judul, penulis, harga);
+        String judul = jTextField1.getText(); //untuk menyimpan judul yang diambil datanya dari inputan 
+        String penulis = jComboBox1.getSelectedItem().toString(); //untuk menyimpan penulis  yang telah dipilih datanya datanya dari data yang ada
+        String harga = jTextField2.getText(); //untuk menyimpan harga buku yang diambil datanya dari inputan 
         InitTable();
-        TampilData();
+        TampilData(); //memanggil metod tampil data
+         
+        
+        try { 
+        String sql= "select*from buku where judul='"+jTextField1.getText()+"' and  penulis='"+jComboBox1.getSelectedItem()+"'"; //queri untuk validasi data bukuberdassarkan judul dan penulis
+        stt = con.createStatement();
+        rss = stt.executeQuery(sql);
+        if(rss.next()){ //kondisi jika data belum ada dapat mengisi data
+           Object[] o =new Object[4]; //membuat object baru jika data belum ada
+                o [0] = rss.getString("id_buku");
+                o [1] = rss.getString("judul");
+                o [2] = rss.getString("penulis");
+                o [3] = rss.getInt("harga");  
+                model.addRow(o);
+            JOptionPane.showMessageDialog(null, "Data Sudah Ada");
+             InitTable();
+             TampilData(); //metod memanggil tampil data
+        }else{
+            TambahData(judul, penulis, harga); //memanggil metod tambah data
+        }    
+       
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+       
+        
+        jTextField1.setText("");
+        jTextField2.setText("");
        
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -462,9 +488,9 @@ public class databuku extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        int baris = jTable1.getSelectedRow();
+        int baris = jTable1.getSelectedRow(); 
         
-        jTable1.setValueAt(jTextField1.getText(), baris, 1);
+        jTable1.setValueAt(jTextField1.getText(), baris, 1); 
         jTable1.setValueAt(jComboBox1.getSelectedItem(), baris, 2);
         jTable1.setValueAt(jTextField2.getText(),baris,3);
         
@@ -472,23 +498,41 @@ public class databuku extends javax.swing.JFrame {
         String judul=jTable1.getValueAt(baris, 1).toString();
         String penulis=jTable1.getValueAt(baris, 2).toString();
         String harga=jTable1.getValueAt(baris, 3).toString();
-        UbahData(id,judul,penulis,harga);
+        try {
+            
+        String sql= "select*from buku where judul='"+jTextField1.getText()+"' and  penulis='"+jComboBox1.getSelectedItem()+"'"; //queri untuk validasi data bukuberdassarkan judul dan penulis
+        stt = con.createStatement();
+        rss = stt.executeQuery(sql);
+        if(rss.next()){
+           Object[] o =new Object[4]; //membuat object baru
+                o [0] = rss.getString("id_buku");
+                o [1] = rss.getString("judul");
+                o [2] = rss.getString("penulis");
+                o [3] = rss.getInt("harga");  
+                model.addRow(o);
+                JOptionPane.showMessageDialog(null, "Data Sudah Ada"); //pesan untuk data sudah ada
+                InitTable();
+                TampilData();
+        }else{
+            UbahData(id,judul,penulis,harga); // memanggil metod ubah data 
+            JOptionPane.showMessageDialog(null, "DATA TELAH BERHASIL DIUBAH"); //jika data belum ad maka data berhasil diubah
+            jTextField1.setText("");
+            jTextField2.setText("");
+        }    
+       
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         
-        jTextField1.setText(judul);
-        jComboBox1.setSelectedItem(penulis);
-        jTextField2.setText(harga);
         
-        JOptionPane.showMessageDialog(null, "DATA TELAH BERHASIL DIUBAH");
-        jTextField1.setText("");
-        jTextField2.setText("");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         try{
-            int baris= jTable1.getSelectedRow();
+            int baris= jTable1.getSelectedRow(); 
             String id_buku = jTable1.getValueAt(baris, 0).toString();
-            HapusData(id_buku,baris);
+            HapusData(id_buku,baris); //memanggil metod hapus data
             JOptionPane.showMessageDialog(null, "Data telah berhasil dihapus");
         }catch (Exception e){
         }
